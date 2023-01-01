@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAz1vmabffpJaBtmLW6r5UVn-0vrz8Mg8U',
-    appId: '1:921203505862:android:b2fd76a9c7b5fb8797f5c7',
+    appId: '1:921203505862:android:41e7c18befd5d2eb97f5c7',
     messagingSenderId: '921203505862',
     projectId: 'riddleme-e34ac',
     storageBucket: 'riddleme-e34ac.appspot.com',
@@ -63,23 +63,21 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAW9yCPiQzA6QXxlBIRfw-HOd3diw2DaQU',
-    appId: '1:921203505862:ios:8ef1337b17bd373f97f5c7',
+    appId: '1:921203505862:ios:bc7323a9561d6ffe97f5c7',
     messagingSenderId: '921203505862',
     projectId: 'riddleme-e34ac',
     storageBucket: 'riddleme-e34ac.appspot.com',
-    iosClientId:
-        '921203505862-gh3lktt8oojrtj7h84b7j273k2j798lf.apps.googleusercontent.com',
-    iosBundleId: 'com.example.riddleMe',
+    iosClientId: '921203505862-4kci9s37ffn9tuibhg2dek3jmeeund8c.apps.googleusercontent.com',
+    iosBundleId: 'com.example.fbAuthTemplate',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyAW9yCPiQzA6QXxlBIRfw-HOd3diw2DaQU',
-    appId: '1:921203505862:ios:8ef1337b17bd373f97f5c7',
+    appId: '1:921203505862:ios:bc7323a9561d6ffe97f5c7',
     messagingSenderId: '921203505862',
     projectId: 'riddleme-e34ac',
     storageBucket: 'riddleme-e34ac.appspot.com',
-    iosClientId:
-        '921203505862-gh3lktt8oojrtj7h84b7j273k2j798lf.apps.googleusercontent.com',
-    iosBundleId: 'com.example.riddleMe',
+    iosClientId: '921203505862-4kci9s37ffn9tuibhg2dek3jmeeund8c.apps.googleusercontent.com',
+    iosBundleId: 'com.example.fbAuthTemplate',
   );
 }

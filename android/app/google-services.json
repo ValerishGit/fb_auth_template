@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "921203505862",
+    "project_id": "riddleme-e34ac",
+    "storage_bucket": "riddleme-e34ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921203505862:android:41e7c18befd5d2eb97f5c7",
+        "android_client_info": {
+          "package_name": "com.example.fb_auth_template"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921203505862-90gqvnd1lj9v103qma4qv26edic1nbsm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz1vmabffpJaBtmLW6r5UVn-0vrz8Mg8U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921203505862-60nn97psoq7son729gjihemgirc3i797.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921203505862-gh3lktt8oojrtj7h84b7j273k2j798lf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.riddleMe"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921203505862:android:b2fd76a9c7b5fb8797f5c7",
+        "android_client_info": {
+          "package_name": "com.example.riddle_me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921203505862-90gqvnd1lj9v103qma4qv26edic1nbsm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz1vmabffpJaBtmLW6r5UVn-0vrz8Mg8U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921203505862-60nn97psoq7son729gjihemgirc3i797.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921203505862-gh3lktt8oojrtj7h84b7j273k2j798lf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.riddleMe"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
