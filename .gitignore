@@ -9,7 +9,6 @@
 .history
 .svn/
 migrate_working_dir/
-
 # IntelliJ related
 *.iml
 *.ipr
@@ -17,7 +16,7 @@ migrate_working_dir/
 .idea/
 
 #Firebase options
-/lib/services/firebase_options.dart
+**/lib/**/firebase_options.dart
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -35,12 +34,27 @@ migrate_working_dir/
 .pub/
 /build/
 
+
 # Symbolication related
 app.*.symbols
 
 # Obfuscation related
 app.*.map.json
 
+firebase_options.dart
+
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/ephemeral
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
 # Android Studio will place build artifacts here
 /android/app/debug
 /android/app/profile
