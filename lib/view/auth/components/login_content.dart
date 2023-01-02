@@ -1,4 +1,6 @@
+import 'package:fb_auth_template/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../../utils/constants.dart';
@@ -23,8 +25,10 @@ class _LoginContentState extends State<LoginContent>
     with TickerProviderStateMixin {
   late final List<Widget> createAccountContent;
   late final List<Widget> loginContent;
+  AuthController authController = Get.find();
 
-  Widget inputField(String hint, IconData iconData) {
+  Widget inputField(
+      String hint, IconData iconData, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 8),
       child: SizedBox(
@@ -36,6 +40,7 @@ class _LoginContentState extends State<LoginContent>
           borderRadius: BorderRadius.circular(30),
           child: SizedBox(
             child: TextField(
+              controller: controller,
               textAlignVertical: TextAlignVertical.bottom,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -54,23 +59,45 @@ class _LoginContentState extends State<LoginContent>
     );
   }
 
-  Widget loginButton(String title) {
+  Widget errorText() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: SizedBox(
+          height: 20,
+          child: Obx(() => Text(
+                authController.errorText.value,
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+        ),
+      ),
+    );
+  }
+
+  Widget loginButton(String title, onClick) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 135, vertical: 16),
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          shape: const StadiumBorder(),
-          primary: kSecondaryColor,
-          elevation: 8,
-          shadowColor: Colors.black87,
-        ),
-        child: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+      child: SizedBox(
+        height: 50,
+        child: ElevatedButton(
+          onPressed: onClick,
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            shape: const StadiumBorder(),
+            primary: kSecondaryColor,
+            elevation: 8,
+            shadowColor: Colors.black87,
+          ),
+          child: Obx(
+            () => !authController.isLoading.value
+                ? Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                : const SizedBox(child: CircularProgressIndicator()),
           ),
         ),
       ),
@@ -143,21 +170,20 @@ class _LoginContentState extends State<LoginContent>
   @override
   void initState() {
     createAccountContent = [
-      inputField('Username', Icons.person_outline),
-      inputField('Email', Icons.mail_outline),
-      inputField(
-        'Password',
-        Icons.lock_outline,
-      ),
-      loginButton('Sign Up'),
+      inputField('Username', Icons.person_outline, authController.userText),
+      inputField('Email', Icons.mail_outline, authController.emailText),
+      inputField('Password', Icons.lock_outline, authController.passwordText),
+      errorText(),
+      loginButton('Sign Up', authController.signUpUser),
       orDivider(),
       logos(),
     ];
 
     loginContent = [
-      inputField('Email / Username', Icons.mail_outline),
-      inputField('Password', Icons.lock_outline),
-      loginButton('Log In'),
+      inputField('Email', Icons.mail_outline, authController.emailText),
+      inputField('Password', Icons.lock_outline, authController.passwordText),
+      errorText(),
+      loginButton('Log In', authController.signInUserWithCred),
       orDivider(),
       logos(),
       forgotPassword(),

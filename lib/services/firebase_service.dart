@@ -13,4 +13,26 @@ class FirebaseService {
     UserData userData = UserData.fromMap(user.data()!);
     return userData;
   }
+
+  static updateLastLogin() async {
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      await FirebaseFirestore.instance
+          .collection('usersCollection')
+          .doc(currentUser.uid)
+          .update({"lastLogin": DateTime.now()}).catchError((e) => print(e));
+    }
+  }
+
+  static Future<void> createUser(UserData user) async {
+    await FirebaseFirestore.instance
+        .collection('usersCollection')
+        .doc(user.token)
+        .set({
+      "displayName": user.displayName,
+      "email": user.email,
+      "token": user.token,
+      "lastLogin": DateTime.now()
+    });
+  }
 }

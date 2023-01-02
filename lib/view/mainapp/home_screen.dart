@@ -1,5 +1,6 @@
 import 'package:fb_auth_template/controller/auth_controller.dart';
 import 'package:fb_auth_template/utils/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:math' as math;
@@ -7,7 +8,8 @@ import 'dart:math' as math;
 import '../widgets/custom_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+  AuthController authController = Get.find();
 
   Widget topWidget(double screenWidth) {
     return Transform.rotate(
@@ -50,7 +52,7 @@ class HomeScreen extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: const PreferredSize(
+      appBar: PreferredSize(
           preferredSize: Size.fromHeight(64.0), child: CustomAppBar()),
       body: Center(
         child: Container(
@@ -69,7 +71,16 @@ class HomeScreen extends StatelessWidget {
                 left: -40,
                 child: bottomWidget(screenSize.width),
               ),
-              const Center(child: Text("HOME")),
+              Column(
+                children: [
+                  authController.isLoggedIn
+                      ? Obx(
+                          () => Text(
+                              authController.currentUser.value.displayName!),
+                        )
+                      : Text("Not Connected"),
+                ],
+              ),
             ],
           ),
         ),

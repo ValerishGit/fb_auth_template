@@ -8,7 +8,7 @@ class UserData {
   final DateTime? lastLogin;
 
   UserData({
-    this.displayName,
+    this.displayName = "",
     this.token,
     this.email,
     this.lastLogin,

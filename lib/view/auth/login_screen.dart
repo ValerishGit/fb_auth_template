@@ -56,8 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(64.0), child: CustomAppBar()),
       backgroundColor: kBackgroundColor,
       body: Center(
         child: Container(

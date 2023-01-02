@@ -1,12 +1,16 @@
+import 'package:fb_auth_template/controller/auth_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../utils/constants.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({
+  CustomAppBar({
     Key? key,
   }) : super(key: key);
+
+  AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +24,34 @@ class CustomAppBar extends StatelessWidget {
       actions: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
-            children: [
-              const Icon(Icons.login_outlined),
-              const SizedBox(
-                width: 5,
-              ),
-              InkWell(
-                  onTap: () => Get.offNamed('/login'), child: Text("Login")),
-            ],
-          ),
-        )
+          child: FirebaseAuth.instance.currentUser == null
+              ? InkWell(
+                  onTap: () => Get.offNamed('/login'),
+                  child: Row(
+                    children: const [
+                      Icon(Icons.login_outlined),
+                      Text("Login"),
+                      SizedBox(
+                        width: 5,
+                      ),
+                    ],
+                  ),
+                )
+              : InkWell(
+                  onTap: () => Get.toNamed(
+                      '/profile/${FirebaseAuth.instance.currentUser!.uid}'),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.person),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Obx(() =>
+                          Text(authController.currentUser.value.displayName!)),
+                    ],
+                  ),
+                ),
+        ),
       ],
       elevation: 5,
     );

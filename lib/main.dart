@@ -3,6 +3,7 @@ import 'package:fb_auth_template/utils/constants.dart';
 import 'package:fb_auth_template/view/auth/login_screen.dart';
 import 'package:fb_auth_template/view/auth/register_screen.dart';
 import 'package:fb_auth_template/view/mainapp/home_screen.dart';
+import 'package:fb_auth_template/view/mainapp/profile_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,10 +28,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       getPages: [
-        GetPage(
-          name: "/",
-          page: () => const HomeScreen(),
-        ),
+        GetPage(name: "/", page: () => HomeScreen(), children: [
+          GetPage(
+            name: "/profile/:id",
+            page: () => ProfileScreen(),
+          ),
+        ]),
         GetPage(
           name: "/login",
           page: () => const LoginScreen(),
