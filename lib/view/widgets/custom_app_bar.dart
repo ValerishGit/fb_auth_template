@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       flexibleSpace: Container(),
       centerTitle: false,
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Colors.transparent,
       title: InkWell(
           onTap: () => Get.offNamed('/'), child: const Text("APP NAME")),
       actions: [
@@ -40,20 +40,11 @@ class CustomAppBar extends StatelessWidget {
               : InkWell(
                   onTap: () => Get.toNamed(
                       '/profile/${FirebaseAuth.instance.currentUser!.uid}'),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.person),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Obx(() =>
-                          Text(authController.currentUser.value.displayName!)),
-                    ],
-                  ),
+                  child: const Icon(Icons.person),
                 ),
         ),
       ],
-      elevation: 5,
+      elevation: 0,
     );
   }
 }

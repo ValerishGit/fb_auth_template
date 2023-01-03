@@ -2,22 +2,31 @@
 import 'dart:convert';
 
 class UserData {
-  final String? displayName;
-  final String? token;
+  final String? uid;
+  final String? firstName;
+  final String? lastName;
+  final String? gender;
+  final String? aboutMe;
   final String? email;
   final DateTime? lastLogin;
 
   UserData({
-    this.displayName = "",
-    this.token,
+    this.firstName,
+    this.lastName,
+    this.gender,
+    this.aboutMe,
+    this.uid,
     this.email,
     this.lastLogin,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'displayName': displayName,
-      'token': token,
+      'token': uid,
+      'firstName': firstName,
+      'lastName': lastName,
+      'gender': gender,
+      'aboutMe': aboutMe,
       'email': email,
       'lastLogin': lastLogin?.millisecondsSinceEpoch,
     };
@@ -30,9 +39,11 @@ class UserData {
 
   factory UserData.fromMap(Map<String, dynamic> map) {
     return UserData(
-      displayName:
-          map['displayName'] != null ? map['displayName'] as String : null,
-      token: map['token'] != null ? map['token'] as String : null,
+      firstName: map['firstName'] != null ? map['firstName'] as String : null,
+      lastName: map['lastName'] != null ? map['lastName'] as String : null,
+      gender: map['gender'] != null ? map['gender'] as String : null,
+      aboutMe: map['aboutMe'] != null ? map['aboutMe'] as String : null,
+      uid: map['uid'] != null ? map['uid'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
       lastLogin: map['lastLogin'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['lastLogin'] as int)

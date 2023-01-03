@@ -31,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "921203505862-gh3lktt8oojrtj7h84b7j273k2j798lf.apps.googleusercontent.com",
+              "client_id": "921203505862-4kci9s37ffn9tuibhg2dek3jmeeund8c.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.riddleMe"
+                "bundle_id": "com.example.fbAuthTemplate"
               }
             }
           ]
@@ -67,10 +67,10 @@
               "client_type": 3
             },
             {
-              "client_id": "921203505862-gh3lktt8oojrtj7h84b7j273k2j798lf.apps.googleusercontent.com",
+              "client_id": "921203505862-4kci9s37ffn9tuibhg2dek3jmeeund8c.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.riddleMe"
+                "bundle_id": "com.example.fbAuthTemplate"
               }
             }
           ]

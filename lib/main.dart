@@ -28,7 +28,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       getPages: [
-        GetPage(name: "/", page: () => HomeScreen(), children: [
+        GetPage(name: "/", page: () => HomeScreen(), middlewares: [
+          AuthGuard()
+        ], children: [
           GetPage(
             name: "/profile/:id",
             page: () => ProfileScreen(),
@@ -39,16 +41,16 @@ class MyApp extends StatelessWidget {
           page: () => const LoginScreen(),
           middlewares: [LoginGuard()],
         ),
-        GetPage(name: "/register", page: () => const RegisterScreen()),
       ],
       title: 'Auth Template',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: kPrimaryColor,
-        hintColor: kSecondaryColor,
+        hintColor: kPrimaryColor,
         highlightColor: kPrimaryColor,
         iconTheme: IconThemeData(color: kPrimaryColor),
-        textSelectionTheme: TextSelectionThemeData(cursorColor: kPrimaryColor),
+        textSelectionTheme:
+            TextSelectionThemeData(cursorColor: kSecondaryColor),
       ),
       initialRoute: "/",
     );

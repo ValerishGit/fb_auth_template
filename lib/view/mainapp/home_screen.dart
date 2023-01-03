@@ -1,90 +1,120 @@
 import 'package:fb_auth_template/controller/auth_controller.dart';
 import 'package:fb_auth_template/utils/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:math' as math;
+import 'package:google_fonts/google_fonts.dart';
 
+import '../../utils/helper_functions.dart';
 import '../widgets/custom_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   AuthController authController = Get.find();
 
-  Widget topWidget(double screenWidth) {
-    return Transform.rotate(
-      angle: -35 * math.pi / 180,
-      child: Container(
-        width: 1.2 * screenWidth,
-        height: 1.2 * screenWidth,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(150),
-          gradient: const LinearGradient(
-            begin: Alignment(-0.2, -0.8),
-            end: Alignment.bottomCenter,
-            colors: [Color.fromARGB(0, 56, 142, 164), kPrimaryColor],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget bottomWidget(double screenWidth) {
-    return Container(
-      width: 1.5 * screenWidth,
-      height: 1.5 * screenWidth,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          begin: Alignment(0.6, -1.1),
-          end: Alignment(0.7, 0.8),
-          colors: [
-            kPrimaryColor,
-            Color.fromARGB(0, 56, 142, 164),
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(64.0), child: CustomAppBar()),
-      body: Center(
+          preferredSize: const Size.fromHeight(64.0), child: CustomAppBar()),
+      body: SingleChildScrollView(
         child: Container(
-          color: kBackgroundColor,
+          decoration: BoxDecoration(
+            gradient: HelperFunctions.bgGradient(),
+          ),
           width: screenSize.width,
           height: screenSize.height,
-          child: Stack(
-            children: [
-              Positioned(
-                top: -160,
-                left: -30,
-                child: topWidget(screenSize.width),
-              ),
-              Positioned(
-                bottom: -180,
-                left: -40,
-                child: bottomWidget(screenSize.width),
-              ),
-              Column(
-                children: [
-                  authController.isLoggedIn
-                      ? Obx(
-                          () => Text(
-                              authController.currentUser.value.displayName!),
-                        )
-                      : Text("Not Connected"),
-                ],
-              ),
-            ],
+          child: SafeArea(
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 22),
+                child: HomeSection()),
           ),
         ),
       ),
+    );
+  }
+}
+
+class HomeSection extends StatelessWidget {
+  HomeSection({
+    super.key,
+  });
+
+  AuthController authController = Get.find();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+            flex: 1,
+            child: Stack(children: [
+              Transform.rotate(
+                angle: 0.2,
+                child: const Icon(
+                  Icons.question_mark_outlined,
+                  size: 250,
+                  color: kSecondaryColor,
+                ),
+              ),
+            ])),
+        const SizedBox(
+          height: 50,
+        ),
+        Expanded(
+          flex: 1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              InkWell(
+                  onTap: () {},
+                  child: Text(
+                    "Daily Run".toUpperCase(),
+                    style: TextStyle(
+                        wordSpacing: 5,
+                        letterSpacing: 3,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        color: kPrimaryColor,
+                        fontFamily: GoogleFonts.varelaRound().fontFamily),
+                  )),
+              const SizedBox(
+                height: 22,
+              ),
+              InkWell(
+                  onTap: () {},
+                  child: Text(
+                    "settings".toUpperCase(),
+                    style: TextStyle(
+                        wordSpacing: 5,
+                        letterSpacing: 3,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        color: kPrimaryColor,
+                        fontFamily: GoogleFonts.varelaRound().fontFamily),
+                  )),
+              const SizedBox(
+                height: 22,
+              ),
+              InkWell(
+                  onTap: () {},
+                  child: Text(
+                    "profile".toUpperCase(),
+                    style: TextStyle(
+                        wordSpacing: 5,
+                        letterSpacing: 3,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        color: kPrimaryColor,
+                        fontFamily: GoogleFonts.varelaRound().fontFamily),
+                  )),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

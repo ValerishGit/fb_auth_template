@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fb_auth_template/modal/user_modal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseService {
   static Future<UserData?> getUserById(String uid) async {
@@ -10,6 +11,9 @@ class FirebaseService {
         .collection('usersCollection')
         .doc(uid)
         .get();
+    if (user.data() == null) {
+      return null;
+    }
     UserData userData = UserData.fromMap(user.data()!);
     return userData;
   }
@@ -25,14 +29,31 @@ class FirebaseService {
   }
 
   static Future<void> createUser(UserData user) async {
-    await FirebaseFirestore.instance
-        .collection('usersCollection')
-        .doc(user.token)
-        .set({
-      "displayName": user.displayName,
-      "email": user.email,
-      "token": user.token,
-      "lastLogin": DateTime.now()
-    });
+    try {
+      await FirebaseFirestore.instance
+          .collection('usersCollection')
+          .doc(user.uid)
+          .set(user.toMap());
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

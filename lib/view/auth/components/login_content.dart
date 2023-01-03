@@ -1,31 +1,11 @@
 import 'package:fb_auth_template/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
-
 import '../../../utils/constants.dart';
-import '../../../utils/helper_functions.dart';
-import '../animations/change_screen_animation.dart';
-import 'bottom_text.dart';
-import 'top_text.dart';
 
-enum Screens {
-  createAccount,
-  welcomeBack,
-}
-
-class LoginContent extends StatefulWidget {
-  const LoginContent({Key? key}) : super(key: key);
-
-  @override
-  State<LoginContent> createState() => _LoginContentState();
-}
-
-class _LoginContentState extends State<LoginContent>
-    with TickerProviderStateMixin {
-  late final List<Widget> createAccountContent;
-  late final List<Widget> loginContent;
-  AuthController authController = Get.find();
+class LoginContent extends StatelessWidget {
+  LoginContent({Key? key}) : super(key: key);
+  final AuthController authController = Get.find();
 
   Widget inputField(
       String hint, IconData iconData, TextEditingController controller) {
@@ -40,17 +20,22 @@ class _LoginContentState extends State<LoginContent>
           borderRadius: BorderRadius.circular(30),
           child: SizedBox(
             child: TextField(
+              style: const TextStyle(color: Colors.white),
               controller: controller,
               textAlignVertical: TextAlignVertical.bottom,
               decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(color: kSecondaryColor)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(color: Colors.grey)),
                 fillColor: Colors.white,
                 hintText: hint,
-                prefixIcon: Icon(iconData),
+                prefixIcon: Icon(
+                  iconData,
+                  color: Colors.grey,
+                ),
               ),
             ),
           ),
@@ -67,7 +52,7 @@ class _LoginContentState extends State<LoginContent>
           height: 20,
           child: Obx(() => Text(
                 authController.errorText.value,
-                style: TextStyle(color: Colors.white, fontSize: 18),
+                style: const TextStyle(color: Colors.white, fontSize: 14),
               )),
         ),
       ),
@@ -84,7 +69,7 @@ class _LoginContentState extends State<LoginContent>
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 14),
             shape: const StadiumBorder(),
-            primary: kSecondaryColor,
+            backgroundColor: kSecondaryColor,
             elevation: 8,
             shadowColor: Colors.black87,
           ),
@@ -120,6 +105,7 @@ class _LoginContentState extends State<LoginContent>
             child: Text(
               'or',
               style: TextStyle(
+                color: kPrimaryColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
@@ -139,127 +125,132 @@ class _LoginContentState extends State<LoginContent>
   Widget logos() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/images/facebook.png'),
-          const SizedBox(width: 24),
-          Image.asset('assets/images/google.png'),
+          SocialLoginButton(
+            buttonTxt: "Continue with Google",
+            imageLogo: 'assets/images/google.png',
+            onClick: () {
+              authController.signInWithGoogle();
+            },
+          ),
+          const SizedBox(height: 24),
+          SocialLoginButton(
+            buttonTxt: "Continue with Facebook",
+            imageLogo: 'assets/images/facebook.png',
+            onClick: () {},
+          ),
         ],
       ),
     );
   }
 
-  Widget forgotPassword() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 110),
-      child: TextButton(
-        onPressed: () {},
-        child: const Text(
-          'Forgot Password?',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: kSecondaryColor,
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    createAccountContent = [
-      inputField('Username', Icons.person_outline, authController.userText),
-      inputField('Email', Icons.mail_outline, authController.emailText),
-      inputField('Password', Icons.lock_outline, authController.passwordText),
-      errorText(),
-      loginButton('Sign Up', authController.signUpUser),
-      orDivider(),
-      logos(),
-    ];
-
-    loginContent = [
-      inputField('Email', Icons.mail_outline, authController.emailText),
-      inputField('Password', Icons.lock_outline, authController.passwordText),
-      errorText(),
-      loginButton('Log In', authController.signInUserWithCred),
-      orDivider(),
-      logos(),
-      forgotPassword(),
-    ];
-
-    ChangeScreenAnimation.initialize(
-      vsync: this,
-      createAccountItems: createAccountContent.length,
-      loginItems: loginContent.length,
-    );
-
-    for (var i = 0; i < createAccountContent.length; i++) {
-      createAccountContent[i] = HelperFunctions.wrapWithAnimatedBuilder(
-        animation: ChangeScreenAnimation.createAccountAnimations[i],
-        child: createAccountContent[i],
-      );
-    }
-
-    for (var i = 0; i < loginContent.length; i++) {
-      loginContent[i] = HelperFunctions.wrapWithAnimatedBuilder(
-        animation: ChangeScreenAnimation.loginAnimations[i],
-        child: loginContent[i],
-      );
-    }
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    ChangeScreenAnimation.dispose();
-
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-
     return Center(
       child: Stack(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 100),
             child: Center(
-              child: Container(
+              child: SizedBox(
                 width: 500,
                 child: Stack(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: const TopText(),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: Text(
+                        'Welcome\nBack',
+                        style: TextStyle(
+                          fontSize: 40,
+                          color: kPrimaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: loginContent,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: createAccountContent,
+                    logos(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 50),
+              child: RichText(
+                text: const TextSpan(
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontFamily: 'Montserrat',
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'We will NEVER post anything on your behalf! ',
+                      style: TextStyle(
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
           ),
-          const Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 50),
-              child: BottomText(),
-            ),
-          ),
         ],
+      ),
+    );
+  }
+}
+
+class SocialLoginButton extends StatelessWidget {
+  const SocialLoginButton({
+    super.key,
+    required this.buttonTxt,
+    required this.imageLogo,
+    required this.onClick,
+  });
+  final String buttonTxt;
+  final String imageLogo;
+  final Function() onClick;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 400,
+      height: 50,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+        ),
+        onPressed: onClick,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image(
+                image: AssetImage(imageLogo),
+                height: 18.0,
+                width: 24,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 24, right: 8),
+                child: Text(
+                  buttonTxt,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
